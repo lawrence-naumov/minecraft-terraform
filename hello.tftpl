@@ -2,16 +2,12 @@
 set -e
 
 sudo apt-get update
-sudo apt-get install -y apache2
+sudo apt-get install -y openjdk-21-jdk
 
-cat <<EOF >/var/www/html/index.html
-<h1>Server of ${owner}</h1>
-List of friends:
-<ul>
-%{ for friend in friends ~}
-  <li>${friend}</li>
-%{ endfor ~}
-</ul>
-EOF
+mkdir -p /root/mc
+cd /root/mc
+wget https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.255/neoforge-21.1.255-installer.jar
+java -jar neoforge-21.1.255-installer.jar
+./run.sh
 
-sudo systemctl enable --now apache2
+# TODO: Write eula accept & service starting
